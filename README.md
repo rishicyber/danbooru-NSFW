@@ -1,8 +1,8 @@
 # danbooru-NSFW
 
-step 1 : Run the main.py
-step 2 : Paste the link from danbooru website 
-step 3 : Enter the number of files to download in terms of pages ( each page contain 20 files )
-step 4 : Enjoy your favourite images on your local machine 
+step 1 : Run the main.py<br />
+step 2 : Paste the link from danbooru website <br />
+step 3 : Enter the number of files to download in terms of pages ( each page contain 20 files )<br />
+step 4 : Enjoy your favourite images on your local machine <br />
 
 Don't forget to share
