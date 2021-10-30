@@ -1,4 +1,5 @@
 # danbooru-NSFW
+requires requests module so run ```pip install requests``` first
 
 step 1 : Run main.py<br />
 step 2 : Paste the link from danbooru website ( https://danbooru.donmai.us/ ) <br />
