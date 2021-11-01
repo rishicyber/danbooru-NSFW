@@ -1,5 +1,5 @@
 import requests
-from os import system, mkdir, chdir
+from os import system, mkdir, chdir, remove
 from sys import platform
 from threading import Thread
 
@@ -9,10 +9,13 @@ def download_for_linux(image_link):  # For linux machine
 
 
 def download_for_windows(image_url):  # For windows machine
-    image_bytes = requests.get(image_url).content
-    img_name = image_url.split("/")[-1]
-    with open(img_name, "wb") as img_file:
-        img_file.write(image_bytes)
+    try:
+        image_bytes = requests.get(image_url).content
+        img_name = image_url.split("/")[-1]
+        with open(img_name, "wb") as img_file:
+            img_file.write(image_bytes)
+    except:
+        print(image_url + "had some issues...")
 
 
 def main(link, no_of_pages):
@@ -26,6 +29,7 @@ def main(link, no_of_pages):
         mkdir(part4)
         chdir(f"./{part4}")
     except:
+        chdir(f"./{part4}")
         print(f"Saving in existing folder named{part4}")
 
     while page <= no_of_pages:
@@ -77,3 +81,4 @@ if __name__ == "__main__":
         no_of_pages = 1
 
     main(link, no_of_pages)
+    remove("index.txt")
