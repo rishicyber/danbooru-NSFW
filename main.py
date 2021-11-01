@@ -1,10 +1,18 @@
 import requests
-from os import system
+from os import system, mkdir, chdir
 from sys import platform
+from threading import Thread
 
 
 def download_for_linux(image_link):  # For linux machine
     system(f"wget -nv {image_link}")
+
+
+def download_for_windows(image_url):  # For windows machine
+    image_bytes = requests.get(image_url).content
+    img_name = image_url.split("/")[-1]
+    with open(img_name, "wb") as img_file:
+        img_file.write(image_bytes)
 
 
 def main(link, no_of_pages):
@@ -13,6 +21,12 @@ def main(link, no_of_pages):
     page = 1  # part2 is page
     part3 = "&tags="
     part4 = link.split("tags=")[-1]
+
+    try:
+        mkdir(part4)
+        chdir(f"./{part4}")
+    except:
+        print(f"Saving in existing folder named{part4}")
 
     while page <= no_of_pages:
         link = f"{part1}{page}{part3}{part4}"
@@ -30,16 +44,26 @@ def main(link, no_of_pages):
                 if 'data-file-url="https://cdn.donmai.us/original' in word:
                     final_link_of_image = word.split("data-file-url=")[1][1:-1]
                     list_of_links.append(final_link_of_image)
-                    download_for_linux(final_link_of_image)
+                    if platform == "linux":
+                        t = Thread(
+                            target=download_for_linux, args=[final_link_of_image]
+                        )
+                        t.start()
+                    else:
+                        t = Thread(
+                            target=download_for_windows, args=[final_link_of_image]
+                        )
+                        t.start()
                     count_of_images_on_this_page += 1
 
         if count_of_images_on_this_page == 0:
             return
 
         # print(*list_of_links, sep="\n", end="\n\n")
-        print("DONE", count_of_images_on_this_page)
+        print(f"{count_of_images_on_this_page} files found on page {page}")
 
         page += 1
+    print("Pleasse wait for download...\n..\n.")
 
 
 if __name__ == "__main__":
