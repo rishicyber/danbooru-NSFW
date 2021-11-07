@@ -15,7 +15,7 @@ def download_for_windows(image_url):  # For windows machine
         with open(img_name, "wb") as img_file:
             img_file.write(image_bytes)
     except:
-        print(image_url + "had some issues...")
+        print(image_url + " had some issues...")
 
 
 def main(link, no_of_pages):
